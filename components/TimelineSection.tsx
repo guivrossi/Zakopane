@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { Calendar, Map, Filter } from 'lucide-react';
 import TimelineEvent from './TimelineEvent';
 import { timelineEvents } from '@/data/tripData';
-import RouteMap from './RouteMap';
+
+// Load RouteMap only on the client to avoid Leaflet window issues during SSR
+const RouteMap = dynamic(() => import('./RouteMap'), { ssr: false });
 
 const phases = [
   { id: 'all', name: 'All Phases', events: timelineEvents },

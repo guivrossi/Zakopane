@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface ConfettiProps {
@@ -9,6 +9,8 @@ interface ConfettiProps {
 }
 
 export default function Confetti({ show, onComplete }: ConfettiProps) {
+  const [targetHeight, setTargetHeight] = useState(1000);
+
   useEffect(() => {
     if (show && onComplete) {
       const timer = setTimeout(() => {
@@ -17,6 +19,13 @@ export default function Confetti({ show, onComplete }: ConfettiProps) {
       return () => clearTimeout(timer);
     }
   }, [show, onComplete]);
+
+  // Safely read window height only on the client
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setTargetHeight(window.innerHeight + 100);
+    }
+  }, []);
 
   if (!show) return null;
 
@@ -39,7 +48,7 @@ export default function Confetti({ show, onComplete }: ConfettiProps) {
             opacity: 1,
           }}
           animate={{
-            y: window.innerHeight + 100,
+            y: targetHeight,
             x: (Math.random() - 0.5) * 200,
             rotate: 360,
             opacity: 0,

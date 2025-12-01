@@ -3,18 +3,7 @@
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { routePoints } from '@/data/tripData';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
-// Fix for default marker icon issue in Next.js
-if (typeof window !== 'undefined') {
-  delete (L.Icon.Default.prototype as any)._getIconUrl;
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-  });
-}
 
 // Dynamically import Leaflet components to avoid SSR issues
 const MapContainer = dynamic(
@@ -40,12 +29,24 @@ const Polyline = dynamic(
 
 export default function RouteMap() {
   const [isClient, setIsClient] = useState(false);
+  const [L, setL] = useState<any>(null);
 
   useEffect(() => {
     setIsClient(true);
+    // Dynamically import Leaflet only on client side
+    import('leaflet').then((leaflet) => {
+      // Fix for default marker icon issue in Next.js
+      delete (leaflet.default.Icon.Default.prototype as any)._getIconUrl;
+      leaflet.default.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+      });
+      setL(leaflet.default);
+    });
   }, []);
 
-  if (!isClient) {
+  if (!isClient || !L) {
     return (
       <div className="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-gray-100 flex items-center justify-center">
         <div className="text-center">
