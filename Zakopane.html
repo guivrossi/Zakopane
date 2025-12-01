@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Polish Christmas Expedition</title>
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --accent: #E67E22;
+            --dad-bg: #E3F2FD;
+            --dad-border: #2196F3;
+            --mom-bg: #FCE4EC;
+            --mom-border: #E91E63;
+            --joint-bg: #E8F5E9;
+            --joint-border: #4CAF50;
+            --drive-bg: #FFF3E0;
+            --drive-border: #FF9800;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #F5F5F5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        header h1 { margin: 0; font-size: 2.5rem; }
+        header p { margin: 10px 0 0; font-size: 1.1rem; opacity: 0.9; }
+        
+        .section-title {
+            background: #eee;
+            color: var(--primary);
+            padding: 15px 30px;
+            margin: 0;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #ddd;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline {
+            padding: 20px;
+        }
+
+        .card {
+            border-left: 6px solid #ccc;
+            background: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Type Variations */
+        .type-drive { border-left-color: var(--drive-border); background-color: var(--drive-bg); }
+        .type-dad { border-left-color: var(--dad-border); background-color: var(--dad-bg); }
+        .type-mom { border-left-color: var(--mom-border); background-color: var(--mom-bg); }
+        .type-joint { border-left-color: var(--joint-border); background-color: var(--joint-bg); }
+        .type-xmas { border-left-color: #D32F2F; background-color: #FFEBEE; }
+
+        /* Checklist Styles */
+        .checklist-section {
+            padding: 20px;
+        }
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 30px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            height: 100%;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .checklist-item {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .checklist-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .checklist-item.completed {
+            background: #E8F5E9;
+            border-color: #4CAF50;
+        }
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .checklist-content {
+            flex: 1;
+        }
+        .checklist-content h4 {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+        }
+        .checklist-content p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .checklist-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .checklist-link:hover {
+            text-decoration: underline;
+        }
+        .checklist-category {
+            margin-top: 30px;
+        }
+        .checklist-category h3 {
+            color: var(--primary);
+            margin: 0 0 15px 0;
+            font-size: 1.2rem;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eee;
+        }
+        .xp-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .section-nav {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+        }
+        .section-nav button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .section-nav button.active {
+            background: white;
+            color: var(--primary);
+            border-bottom: 3px solid var(--accent);
+        }
+        .section-content {
+            display: none;
+        }
+        .section-content.active {
+            display: block;
+        }
+
+        .date-badge {
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        h3 { margin: 0 0 10px 0; font-size: 1.3rem; }
+        
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .col { flex: 1; min-width: 250px; }
+        
+        ul { padding-left: 20px; margin: 5px 0; }
+        li { margin-bottom: 5px; }
+
+        .toddler-alert {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 5px;
+            border: 1px dashed #666;
+            font-size: 0.9rem;
+        }
+        
+        .drive-stats {
+            font-weight: bold;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        @media print {
+            body { background: white; }
+            .container { box-shadow: none; width: 100%; max-width: 100%; }
+            .card { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>The Polish Christmas Expedition</h1>
+        <p>Utrecht ⇄ Zakopane • Dec 13 – Dec 28, 2025</p>
+        <p><em>2 Adults • 1 Toddler (2.7y) • 1 Epic Road Trip</em></p>
+    </header>
+
+    <div class="section-nav">
+        <button class="nav-btn active" onclick="showSection('checklist', this)">📋 Pre-Trip Checklist</button>
+        <button class="nav-btn" onclick="showSection('timeline', this)">🗓️ Trip Timeline</button>
+    </div>
+
+    <!-- Checklist Section -->
+    <div id="checklist-section" class="section-content active">
+        <div class="checklist-section">
+            <h2 class="section-title">Pre-Trip Essentials Checklist</h2>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill">0% Complete</div>
+            </div>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span class="xp-badge" id="xp-counter">XP: 0</span>
+            </div>
+
+            <div class="checklist-category">
+                <h3>🏨 Accommodation</h3>
+                <div class="checklist-grid">
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="acc-cologne" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Cologne Hotel</h4>
+                            <p>Book Hyatt Regency or Adagio Cologne for Dec 13</p>
+                            <a href="https://www.booking.com" target="_blank" class="checklist-link">Book on Booking.com →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="acc-berlin" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Berlin Hotel</h4>
+                            <p>Scandic Berlin Potsdamer Platz for Dec 14</p>
+                            <a href="https://www.booking.com" target="_blank" class="checklist-link">Book on Booking.com →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="acc-warsaw" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Warsaw Accommodation</h4>
+                            <p>Powiśle District - 2 nights (Dec 15-16)</p>
+                            <a href="https://www.booking.com" target="_blank" class="checklist-link">Book on Booking.com →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="100">
+                        <input type="checkbox" id="acc-zakopane" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Zakopane Cabin</h4>
+                            <p>Górska Osada in Poronin (Dec 17-26) - 10 nights</p>
+                            <a href="https://www.booking.com" target="_blank" class="checklist-link">Book on Booking.com →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="acc-dresden" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Dresden Hotel</h4>
+                            <p>Near Frauenkirche for Dec 27</p>
+                            <a href="https://www.booking.com" target="_blank" class="checklist-link">Book on Booking.com →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <h3>🏂 Snowboarding & Gear</h3>
+                <div class="checklist-grid">
+                    <div class="checklist-item" data-xp="75">
+                        <input type="checkbox" id="snow-lessons" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Book Snowboard Lessons</h4>
+                            <p>Polana Szymoszkowa - 4 lessons (2 for Dad, 2 for Mom)</p>
+                            <a href="https://www.polanaszymoszkowa.pl" target="_blank" class="checklist-link">Book Lessons →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="snow-gear-rental" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Rent Snowboard Gear</h4>
+                            <p>Snowboard, boots, bindings for both adults</p>
+                            <a href="https://www.polanaszymoszkowa.pl" target="_blank" class="checklist-link">Rent Gear →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="snow-clothing" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Buy/Rent Winter Clothing</h4>
+                            <p>Waterproof jackets, pants, gloves, goggles</p>
+                            <a href="https://www.decathlon.nl" target="_blank" class="checklist-link">Decathlon NL →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="toddler-gear" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Toddler Winter Gear</h4>
+                            <p>Snowsuit, boots, mittens, warm hat for Maxi</p>
+                            <a href="https://www.decathlon.nl" target="_blank" class="checklist-link">Decathlon NL →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <h3>🎫 Activities & Tickets</h3>
+                <div class="checklist-grid">
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="katatonia-tickets" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Katatonia Concert Tickets</h4>
+                            <p>Live Music Hall Cologne - Dec 13, Doors 18:30</p>
+                            <a href="https://www.livenation.de" target="_blank" class="checklist-link">Buy Tickets →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="copernicus-tickets" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Copernicus Science Centre</h4>
+                            <p>Warsaw - Bzzz! Gallery for toddlers</p>
+                            <a href="https://www.kopernik.org.pl" target="_blank" class="checklist-link">Book Tickets →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="gubalowka-funicular" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Gubałówka Funicular</h4>
+                            <p>Zakopane - Funicular train tickets</p>
+                            <a href="https://www.pkl.pl" target="_blank" class="checklist-link">PKL Website →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="75">
+                        <input type="checkbox" id="kulig-ride" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Kulig (Horse Sleigh Ride)</h4>
+                            <p>Christmas Day - Book NOW! Very popular</p>
+                            <a href="https://www.zakopane.pl" target="_blank" class="checklist-link">Book Kulig →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="thermal-baths" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Chochołowskie Termy</h4>
+                            <p>Thermal baths - Dec 23</p>
+                            <a href="https://www.termachocholowskie.pl" target="_blank" class="checklist-link">Book Entry →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="50">
+                        <input type="checkbox" id="bachledka-treetop" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Bachledka Treetop Walk</h4>
+                            <p>Slovakia - Scenic drive day</p>
+                            <a href="https://www.bachledka.sk" target="_blank" class="checklist-link">Book Tickets →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <h3>🚗 Travel Essentials</h3>
+                <div class="checklist-grid">
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="car-check" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Car Service Check</h4>
+                            <p>Oil, tires, brakes before long drive</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="toll-vignette" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Polish Toll Vignette</h4>
+                            <p>Buy online for A2 Highway</p>
+                            <a href="https://www.e-toll.pl" target="_blank" class="checklist-link">Buy Vignette →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="slovakia-vignette" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Slovakia Vignette</h4>
+                            <p>For scenic drive day (Dec 22)</p>
+                            <a href="https://www.eznamka.sk" target="_blank" class="checklist-link">Buy Vignette →</a>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="travel-insurance" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Travel Insurance</h4>
+                            <p>Verify coverage for Poland & Slovakia</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="car-seat" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Car Seat Check</h4>
+                            <p>Verify toddler car seat is properly installed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <h3>📱 Apps & Documents</h3>
+                <div class="checklist-grid">
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="download-maps" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Download Offline Maps</h4>
+                            <p>Google Maps offline for Poland & Slovakia</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="passports" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Check Passports</h4>
+                            <p>Valid for all family members</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="driving-license" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Driving License</h4>
+                            <p>Valid EU license for Poland & Slovakia</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="credit-cards" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Credit Cards</h4>
+                            <p>Notify bank of travel dates</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-category">
+                <h3>👶 Toddler Essentials</h3>
+                <div class="checklist-grid">
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="noise-headphones" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Noise-Canceling Headphones</h4>
+                            <p>For concert or loud venues</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="travel-toys" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Travel Toys & Books</h4>
+                            <p>For long car rides</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="snacks-supplies" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Travel Snacks</h4>
+                            <p>Stock up on favorite snacks for Maxi</p>
+                        </div>
+                    </div>
+                    <div class="checklist-item" data-xp="25">
+                        <input type="checkbox" id="medications" onchange="updateProgress()">
+                        <div class="checklist-content">
+                            <h4>Medications & First Aid</h4>
+                            <p>Child-friendly pain relief, bandages, etc.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline Section -->
+    <div id="timeline-section" class="section-content">
+    <h2 class="section-title">Phase 1: The Journey East</h2>
+    
+    <div class="timeline">
+        <div class="card type-drive">
+            <span class="date-badge">Sat, Dec 13</span>
+            <h3>Utrecht ➔ Cologne (The Concert)</h3>
+            <span class="drive-stats">🚗 Drive: ~2.5 hrs</span>
+            <div class="details">
+                <div class="col">
+                    <strong>The Plan:</strong> Easy drive to Cologne. Check in early.
+                    <br><strong>Event:</strong> 🎸 Katatonia @ Live Music Hall (Doors 18:30).
+                    <br><strong>Sleep:</strong> Hyatt Regency or Adagio Cologne.
+                </div>
+                <div class="col">
+                    <div class="toddler-alert">👶 <strong>Toddler Ops:</strong> Use hotel babysitting or split shift (one parent stays at hotel). If taking kid near venue: Noise-canceling headphones essential.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-drive">
+            <span class="date-badge">Sun, Dec 14</span>
+            <h3>Cologne ➔ Berlin (Pit Stop)</h3>
+            <span class="drive-stats">🚗 Drive: ~6 hrs</span>
+            <div class="details">
+                <div class="col">
+                    <strong>The Plan:</strong> The big push. Stop halfway for lunch (Hannover/Magdeburg).
+                    <br><strong>Activity:</strong> Stretch legs at Gendarmenmarkt Christmas Market.
+                    <br><strong>Sleep:</strong> Scandic Berlin Potsdamer Platz.
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-drive">
+            <span class="date-badge">Mon, Dec 15</span>
+            <h3>Berlin ➔ Warsaw</h3>
+            <span class="drive-stats">🚗 Drive: ~5.5 hrs</span>
+            <div class="details">
+                <div class="col">
+                    <strong>The Plan:</strong> Cross into Poland. Watch for tolls (A2 Highway).
+                    <br><strong>Sleep:</strong> Powiśle District (Warsaw).
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-joint">
+            <span class="date-badge">Tue, Dec 16</span>
+            <h3>Warsaw: Science & Lights</h3>
+            <div class="details">
+                <div class="col">
+                    <strong>Morning:</strong> Copernicus Science Centre (Go to <em>Bzzz! Gallery</em> - specifically for under 5s).
+                    <br><strong>Evening:</strong> Old Town Market Place (Rynek) for Christmas lights.
+                    <br><strong>Food:</strong> <em>Elektrownia Powiśle</em> (Food Hall).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Phase 2: Zakopane (Split-Shift & Nature)</h2>
+
+    <div class="timeline">
+        <div class="card type-drive">
+            <span class="date-badge">Wed, Dec 17</span>
+            <h3>Warsaw ➔ Zakopane</h3>
+            <span class="drive-stats">🚗 Drive: ~5.5 hrs (S7 Road)</span>
+            <div class="details">
+                <div class="col">
+                    <strong>Arrival:</strong> Check into Cabin (e.g., Górska Osada in Poronin).
+                    <br><strong>Task:</strong> Unpack, grocery run for basics (water/milk/snacks).
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-dad">
+            <span class="date-badge">Thu, Dec 18</span>
+            <h3>Dad Snowboards / Mom & Maxi Explore</h3>
+            <div class="details">
+                <div class="col">
+                    🏂 <strong>Dad:</strong> 09:00 - 13:00 Lesson at <em>Polana Szymoszkowa</em>.
+                </div>
+                <div class="col">
+                    🧸 <strong>Mom & Maxi:</strong> Funicular train up <em>Gubałówka</em>. Waffles & Views.
+                </div>
+            </div>
+            <div class="toddler-alert">🍜 <strong>Lunch Reunion (14:00):</strong> Meet at base of slope or <em>Dobra Kasza Nasza</em>.</div>
+        </div>
+
+        <div class="card type-dad">
+            <span class="date-badge">Fri, Dec 19</span>
+            <h3>Dad Snowboards / Mom & Maxi Play</h3>
+            <div class="details">
+                <div class="col">
+                    🏂 <strong>Dad:</strong> 09:00 - 13:00 Snowboard Day 2.
+                </div>
+                <div class="col">
+                    🧸 <strong>Mom & Maxi:</strong> <em>Snowlandia</em> Maze (near Ski Jump).
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-mom">
+            <span class="date-badge">Sat, Dec 20</span>
+            <h3>Mom Snowboards / Dad & Maxi Play</h3>
+            <div class="details">
+                <div class="col">
+                    🏂 <strong>Mom:</strong> 09:00 - 13:00 Lesson at <em>Polana Szymoszkowa</em>.
+                </div>
+                <div class="col">
+                    🧸 <strong>Dad & Maxi:</strong> Sledding at <em>Nosal</em> (gentle hill).
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-mom">
+            <span class="date-badge">Sun, Dec 21</span>
+            <h3>Mom Snowboards / Dad & Maxi Hike</h3>
+            <div class="details">
+                <div class="col">
+                    🏂 <strong>Mom:</strong> 09:00 - 13:00 Snowboard Day 2.
+                </div>
+                <div class="col">
+                    🧸 <strong>Dad & Maxi:</strong> Walk <em>Strążyska Valley</em> (flat, scenic, tea hut at end).
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-drive" style="background: #FFF8E1; border-left-color: #FFC107;">
+            <span class="date-badge" style="background: #FFC107; color: black;">Mon, Dec 22</span>
+            <h3>The Tatra Infinity Loop (Scenic Drive)</h3>
+            <span class="drive-stats">🚗 Loop: ~200km (Total day: 6-7 hrs)</span>
+            <div class="details">
+                <div class="col">
+                    <strong>Stop 1:</strong> Bachledka (Slovakia). Treetop Walk (Gondola access).
+                    <br><strong>Stop 2:</strong> Štrbské Pleso (Slovakia). Frozen alpine lake walk. Lunch at <em>Koliba Patria</em>.
+                    <br><strong>Stop 3:</strong> Chochołów (Poland). Historic wooden village.
+                </div>
+                <div class="col">
+                    <div class="toddler-alert">📸 Best family photo ops of the trip! Use drive time for Maxi's nap.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-joint" style="background: #E0F7FA; border-left-color: #00BCD4;">
+            <span class="date-badge" style="background: #00BCD4;">Tue, Dec 23</span>
+            <h3>Thermal Baths Recovery</h3>
+            <div class="details">
+                <div class="col">
+                    <strong>Activity:</strong> <em>Chochołowskie Termy</em>.
+                    <br><strong>Strategy:</strong> Arrive 09:00 AM. Go straight to Kids Zone.
+                    <br><strong>Swap:</strong> Take turns in the "Saunarium" (Adults only section).
+                    <br><strong>Evening:</strong> ⚠️ <strong>Last Chance Grocery Shop for Xmas!</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-xmas">
+            <span class="date-badge" style="background: #D32F2F;">Wed, Dec 24</span>
+            <h3>Wigilia (Christmas Eve)</h3>
+            <div class="details">
+                <div class="col">
+                    <strong>Day:</strong> Short walk / Snowman building at cabin.
+                    <br><strong>Evening:</strong> Traditional Polish dinner in the cabin. (Shops close at 14:00).
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-xmas">
+            <span class="date-badge" style="background: #D32F2F;">Thu, Dec 25</span>
+            <h3>Christmas Day</h3>
+            <div class="details">
+                <div class="col">
+                    <strong>Activity:</strong> <em>Kulig</em> (Horse Sleigh Ride) with Bonfire. Book this NOW.
+                    <br><strong>Food:</strong> Most restaurants closed/booked. Eat at cabin or pre-booked hotel buffet.
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-xmas">
+            <span class="date-badge" style="background: #D32F2F;">Fri, Dec 26</span>
+            <h3>Boxing Day (Relax)</h3>
+            <div class="details">
+                <div class="col">
+                    <strong>Morning:</strong> Lazy breakfast. Last sled run.
+                    <br><strong>Afternoon:</strong> Pack up gear.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Phase 3: The Return</h2>
+
+    <div class="timeline">
+        <div class="card type-drive">
+            <span class="date-badge">Sat, Dec 27</span>
+            <h3>Zakopane ➔ Dresden</h3>
+            <span class="drive-stats">🚗 Drive: ~6.5 hrs</span>
+            <div class="details">
+                <div class="col">
+                    <strong>The Plan:</strong> Leave early to beat traffic.
+                    <br><strong>Sleep:</strong> Dresden (Near Frauenkirche).
+                    <br><strong>Evening:</strong> Walk through the historic center.
+                </div>
+            </div>
+        </div>
+
+        <div class="card type-drive">
+            <span class="date-badge">Sun, Dec 28</span>
+            <h3>Dresden ➔ Utrecht</h3>
+            <span class="drive-stats">🚗 Drive: ~7 hrs</span>
+            <div class="details">
+                <div class="col">
+                    <strong>The Plan:</strong> The final leg. Home sweet home.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <div style="text-align: center; padding: 20px; color: #666; font-size: 0.8rem;">
+        Generated by <strong>Columbus</strong> • Your Full-Cycle AI Travel Advisor
+    </div>
+</div>
+
+<script>
+    // Section Navigation
+    function showSection(sectionName, button) {
+        // Hide all sections
+        document.querySelectorAll('.section-content').forEach(section => {
+            section.classList.remove('active');
+        });
+        // Remove active from all buttons
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        // Show selected section
+        document.getElementById(sectionName + '-section').classList.add('active');
+        // Activate button
+        button.classList.add('active');
+    }
+
+    // Progress Tracking
+    function updateProgress() {
+        const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+        const total = checkboxes.length;
+        let completed = 0;
+        let totalXP = 0;
+
+        checkboxes.forEach(checkbox => {
+            const item = checkbox.closest('.checklist-item');
+            if (checkbox.checked) {
+                completed++;
+                item.classList.add('completed');
+                totalXP += parseInt(item.dataset.xp) || 0;
+            } else {
+                item.classList.remove('completed');
+            }
+        });
+
+        const percentage = Math.round((completed / total) * 100);
+        const progressFill = document.getElementById('progress-fill');
+        progressFill.style.width = percentage + '%';
+        progressFill.textContent = percentage + '% Complete';
+
+        document.getElementById('xp-counter').textContent = 'XP: ' + totalXP;
+
+        // Save to localStorage
+        const checkedItems = Array.from(checkboxes)
+            .map((cb, index) => cb.checked ? index : null)
+            .filter(i => i !== null);
+        localStorage.setItem('zakopane-checklist', JSON.stringify(checkedItems));
+    }
+
+    // Load saved progress
+    window.addEventListener('DOMContentLoaded', function() {
+        const saved = localStorage.getItem('zakopane-checklist');
+        if (saved) {
+            const checkedItems = JSON.parse(saved);
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            checkedItems.forEach(index => {
+                if (checkboxes[index]) {
+                    checkboxes[index].checked = true;
+                    checkboxes[index].closest('.checklist-item').classList.add('completed');
+                }
+            });
+        }
+        updateProgress();
+    });
+</script>
+
+</body>
+</html>
